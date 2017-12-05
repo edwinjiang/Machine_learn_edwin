@@ -1,0 +1,30 @@
+SVM 需要调参数，运算速度慢
+
+随机森林运算速度快，允许异常值。调参比较简单
+
+
+
+回归：
+
+时间序列的分析：ARIMA
+用原始值减去滑动平均值，然后在用差分得到一个在0附近震荡的曲线，然后取对数之后得到一个震荡不大的曲线。然后在做回归分析
+
+梯度下降算法
+
+MSE。R2。RMSE的计算公式：
+mse = np.average((y_hat - np.array(y_test)) ** 2)  # Mean Squared Error
+rmse = np.sqrt(mse)  # Root Mean Squared Error
+print 'R2 = ', linreg.score(x_train, y_train)
+print 'R2 = ', linreg.score(x_test, y_test)
+
+超参数的打印：
+print '超参数：\n', lasso_model.best_params_
+
+
+用ridge或者lasso进行的回归分析，可以防止用lineregression产生的过拟合
+
+
+model.fit(x, y.ravel())
+fit要求x是列向量、y是行向量 ravel转成行向量
+
+
