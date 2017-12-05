@@ -1,0 +1,41 @@
+> data = read.csv("customers.csv",sep=',',header=T)
+> data
+> r = round(cor(data[,3:8]),3)
+> r
+                  Fresh  Milk Grocery Frozen Detergents_Paper Delicatessen
+Fresh             1.000 0.101  -0.012  0.346           -0.102        0.245
+Milk              0.101 1.000   0.728  0.124            0.662        0.406
+Grocery          -0.012 0.728   1.000 -0.040            0.925        0.205
+Frozen            0.346 0.124  -0.040  1.000           -0.132        0.391
+Detergents_Paper -0.102 0.662   0.925 -0.132            1.000        0.069
+Delicatessen      0.245 0.406   0.205  0.391            0.069        1.000
+> pca = princomp(data[,3:8],cor=T)
+> summary(pca,loadings = T)
+Importance of components:
+                          Comp.1    Comp.2    Comp.3     Comp.4     Comp.5     Comp.6
+Standard deviation     1.6263375 1.3048310 0.8602702 0.75081970 0.53448699 0.25094046
+Proportion of Variance 0.4408289 0.2837640 0.1233441 0.09395504 0.04761272 0.01049519
+Cumulative Proportion  0.4408289 0.7245929 0.8479371 0.94189209 0.98950481 1.00000000
+
+Loadings:
+                 Comp.1 Comp.2 Comp.3 Comp.4 Comp.5 Comp.6
+Fresh                   -0.528  0.812  0.237              
+Milk             -0.545                      -0.827       
+Grocery          -0.579  0.146  0.108 -0.106  0.315  0.722
+Frozen                  -0.611 -0.178 -0.769              
+Detergents_Paper -0.549  0.255  0.136 -0.172  0.340 -0.686
+Delicatessen     -0.249 -0.504 -0.524  0.552  0.315       
+> pre1 = round(predict(pca),3)
+> pca$scores
+> screeplot(pca,type="lines")
+> load = loadings(pca)
+> plot(load[,1:3])
+  text(load[,1],load[,2],load[,3])
+> abline(h=0)
+> abline(v=0)
+
+> score = as.matrix(pca$scores)
+> sd = as.vector(pca$sdev)
+> weight = sd^2/sum(sd^2)
+> tscore = score %*% weight
+> outcome = data.frame(pca$scores,tscore)
